@@ -7,12 +7,13 @@ on:
     branches: [ main ]
 
 jobs:
-
-  build:
+  docker:
 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+    - uses: docker/setup-qemu-action@v1
+    - uses: docker/setup-buildx-action@v1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag polesapart/qt5-arm-cross-build:$(date +%s)
+      run: docker buildx . --file Dockerfile --tag polesapart/qt5-arm-cross-build:$(date +%s)
